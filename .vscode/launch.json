@@ -1,0 +1,28 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Action Planner: Servidor Dev",
+      "type": "node-terminal",
+      "request": "launch",
+      "command": "npm run dev",
+      "windows": {
+        "command": "npm.cmd run dev"
+      }
+    },
+    {
+      "name": "Action Planner: Chrome",
+      "type": "pwa-chrome",
+      "request": "launch",
+      "url": "http://localhost:3000",
+      "webRoot": "${workspaceFolder}",
+      "preLaunchTask": "action-planner: dev"
+    }
+  ],
+  "compounds": [
+    {
+      "name": "Action Planner: Full Stack Local",
+      "configurations": ["Action Planner: Chrome"]
+    }
+  ]
+}

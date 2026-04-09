@@ -1,0 +1,92 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-background: #fcfdff;
+  --color-foreground: #101828;
+  --color-foreground-strong: #111827;
+  --color-foreground-muted: #667085;
+  --color-foreground-soft: #98a2b3;
+  --color-card: #ffffff;
+  --color-surface-muted: #f7f9fc;
+  --color-surface-neutral: #eef3fb;
+  --color-border: #d7dee8;
+  --color-border-strong: #c7d1df;
+  --color-gestor: #08b33d;
+  --color-gestor-dark: #059639;
+  --color-gestor-soft: #ebfaef;
+  --color-gestor-outline: #a8efbf;
+  --color-tecnico: #2563eb;
+  --color-tecnico-dark: #1d4fd7;
+  --color-tecnico-soft: #e4edff;
+  --color-tecnico-outline: #b7d0ff;
+  --color-info: #deebff;
+  --color-warning: #fff3ca;
+  --color-success: #e9f9ef;
+  --color-danger: #f90009;
+  --color-danger-soft: #ffe7ea;
+  --shadow-card: 0 2px 10px rgba(16, 24, 40, 0.06), 0 8px 24px rgba(16, 24, 40, 0.05);
+  --shadow-button: 0 10px 22px rgba(16, 24, 40, 0.08);
+  --shadow-hero: 0 12px 28px rgba(16, 24, 40, 0.08);
+  --radius-panel: 2rem;
+  --radius-panel-lg: 2.75rem;
+  --radius-cta: 1.75rem;
+  --radius-field: 1.25rem;
+  --size-field: 4rem;
+  --size-button: 4rem;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--color-background);
+  color: var(--color-foreground);
+  font-family: var(--font-manrope), sans-serif;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input,
+textarea {
+  font: inherit;
+}
+
+::selection {
+  background: rgba(37, 99, 235, 0.18);
+}
+
+@layer base {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    color: inherit;
+    letter-spacing: -0.03em;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  input::placeholder,
+  textarea::placeholder {
+    color: var(--color-foreground-soft);
+  }
+}

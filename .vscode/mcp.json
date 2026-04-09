@@ -1,0 +1,22 @@
+{
+  "servers": {
+    "nextDevtools": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "next-devtools-mcp@latest"],
+      "env": {
+        "NEXT_TELEMETRY_DISABLED": "1"
+      }
+    },
+    "tailwindCss": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "@clarity-contrib/tailwindcss-mcp-server"]
+    },
+    "shadcnUi": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "@jpisnice/shadcn-ui-mcp-server"]
+    }
+  }
+}
