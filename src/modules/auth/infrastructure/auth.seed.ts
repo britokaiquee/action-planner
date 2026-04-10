@@ -11,17 +11,17 @@ export const authUsersSeed: AuthUser[] = [
     role: "gestor",
     cpf: "123.456.789-10",
     phone: "(73) 99999-1000",
-    department: "Coordenacao Geral",
+    department: "Coordenação Geral",
   },
   {
     id: "tecnico-1",
-    name: "Joao Silva",
+    name: "João Silva",
     email: "tecnico@actionplanner.com",
     password: MOCK_AUTH_PASSWORD,
     role: "tecnico",
     cpf: "987.654.321-00",
     phone: "(73) 99999-2000",
-    jobTitle: "Tecnico de TI",
+    jobTitle: "Técnico de TI",
   },
 ];
 

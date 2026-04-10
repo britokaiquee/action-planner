@@ -1,0 +1,36 @@
+- generic [active] [ref=e1]:
+  - button "Open Next.js Dev Tools" [ref=e7] [cursor=pointer]:
+    - img [ref=e8]
+  - alert [ref=e11]
+  - main [ref=e12]:
+    - generic [ref=e14]:
+      - heading "Gestão de Ações" [level=1] [ref=e15]
+      - paragraph [ref=e16]: Selecione o tipo de acesso
+    - generic [ref=e18]:
+      - generic [ref=e19]:
+        - link "Técnico Acesso para técnicos de campo" [ref=e20] [cursor=pointer]:
+          - /url: /tecnico/login
+          - img [ref=e22]
+          - generic [ref=e25]:
+            - paragraph [ref=e26]: Técnico
+            - paragraph [ref=e27]: Acesso para técnicos de campo
+        - link "Gestor Acesso para coordenadores" [ref=e28] [cursor=pointer]:
+          - /url: /gestor/login
+          - img [ref=e30]
+          - generic [ref=e34]:
+            - paragraph [ref=e35]: Gestor
+            - paragraph [ref=e36]: Acesso para coordenadores
+      - generic [ref=e38]:
+        - generic [ref=e39]:
+          - generic [ref=e40]: Login
+          - textbox "Login" [ref=e41]:
+            - /placeholder: usuario@exemplo.com
+        - generic [ref=e42]:
+          - generic [ref=e43]: Senha
+          - textbox "Senha" [ref=e44]:
+            - /placeholder: Digite sua senha
+        - button "Entrar" [ref=e45] [cursor=pointer]
+        - paragraph [ref=e46]:
+          - text: Ainda não tem acesso?
+          - link "Cadastre-se" [ref=e47] [cursor=pointer]:
+            - /url: /gestor/cadastro

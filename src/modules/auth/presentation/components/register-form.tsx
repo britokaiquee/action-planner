@@ -1,9 +1,9 @@
 ﻿"use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useState, useTransition } from "react";
 
 import type { AuthRole } from "@/modules/auth/domain/entities";
+import { useAuth } from "@/modules/auth/presentation/auth-provider";
 import { cn } from "@/shared/lib/utils";
 import { Button } from "@/shared/ui/button";
 import { Input } from "@/shared/ui/input";
@@ -13,12 +13,14 @@ interface RegisterFormProps {
 }
 
 export function RegisterForm({ role }: RegisterFormProps) {
-  const router = useRouter();
+  const { register } = useAuth();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [jobFunction, setJobFunction] = useState("");
   const [success, setSuccess] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [isPending, startTransition] = useTransition();
 
   const isGestor = role === "gestor";
 
@@ -28,10 +30,29 @@ export function RegisterForm({ role }: RegisterFormProps) {
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    setSuccess(true);
-    setTimeout(() => {
-      router.push(`/${role}/login`);
-    }, 1500);
+
+    setErrorMessage("");
+
+    startTransition(async () => {
+      try {
+        await register({
+          name: name.trim(),
+          email: email.trim(),
+          password,
+          role,
+          department: isGestor ? jobFunction.trim() : undefined,
+          jobTitle: isGestor ? undefined : jobFunction.trim(),
+        });
+
+        setSuccess(true);
+
+        window.setTimeout(() => {
+          window.location.replace(`/${role}/login?email=${encodeURIComponent(email.trim())}`);
+        }, 1200);
+      } catch (error) {
+        setErrorMessage(error instanceof Error ? error.message : "Nao foi possivel concluir o cadastro.");
+      }
+    });
   }
 
   return (
@@ -87,13 +108,17 @@ export function RegisterForm({ role }: RegisterFormProps) {
         </p>
       ) : null}
 
+      {errorMessage ? (
+        <p className="rounded-[1rem] border border-[#ffd7da] bg-[#fff5f6] px-4 py-3 text-sm font-medium text-danger">{errorMessage}</p>
+      ) : null}
+
       <Button
         className="mt-2 h-14 rounded-[1rem] text-[1.05rem] font-semibold shadow-none"
-        disabled={success}
+        disabled={isPending || success}
         type="submit"
         variant={toneClasses.button}
       >
-        {isGestor ? "Cadastrar Gestor" : "Cadastrar Técnico"}
+        {isPending ? "Salvando..." : isGestor ? "Cadastrar Gestor" : "Cadastrar Técnico"}
       </Button>
     </form>
   );

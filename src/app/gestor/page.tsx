@@ -1,12 +1,5 @@
-﻿import Link from "next/link";
+﻿import { GestorUnderConstructionScreen } from "@/modules/auth/presentation/components/gestor-under-construction-screen";
 
 export default function GestorPage() {
-  return (
-    <main className="flex min-h-screen flex-col items-center justify-center gap-6 bg-white px-6 text-center">
-      <p className="text-[1.1rem] font-medium text-[#49566b]">Em construção</p>
-      <Link className="text-sm font-semibold text-gestor underline underline-offset-2" href="/gestor/login">
-        Voltar ao login
-      </Link>
-    </main>
-  );
+  return <GestorUnderConstructionScreen />;
 }

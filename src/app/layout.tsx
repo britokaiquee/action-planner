@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Manrope } from "next/font/google";
 
+import { AuthProvider } from "@/modules/auth/presentation/auth-provider";
+
 import "./globals.css";
 
 const manrope = Manrope({
@@ -16,7 +18,9 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="pt-BR">
-      <body className={manrope.variable}>{children}</body>
+      <body className={manrope.variable}>
+        <AuthProvider>{children}</AuthProvider>
+      </body>
     </html>
   );
 }

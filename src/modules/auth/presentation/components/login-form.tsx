@@ -1,10 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useTransition } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 
 import type { AuthRole } from "@/modules/auth/domain/entities";
+import { authDemoCredentials } from "@/modules/auth/infrastructure/auth.seed";
+import { useAuth } from "@/modules/auth/presentation/auth-provider";
 import { cn } from "@/shared/lib/utils";
 import { Button } from "@/shared/ui/button";
 import { Input } from "@/shared/ui/input";
@@ -15,9 +17,12 @@ interface LoginFormProps {
 }
 
 export function LoginForm({ role, defaultEmail = "" }: LoginFormProps) {
-  const router = useRouter();
-  const [email, setEmail] = useState(defaultEmail);
+  const searchParams = useSearchParams();
+  const { login } = useAuth();
+  const [email, setEmail] = useState(defaultEmail || searchParams.get("email") || "");
   const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [isPending, startTransition] = useTransition();
 
   const toneClasses =
     role === "gestor"
@@ -34,7 +39,22 @@ export function LoginForm({ role, defaultEmail = "" }: LoginFormProps) {
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    router.push(`/${role}`);
+
+    setErrorMessage("");
+
+    startTransition(async () => {
+      try {
+        const session = await login({
+          email: email.trim(),
+          password,
+          role,
+        });
+
+        window.location.replace(`/${session.user.role}`);
+      } catch (error) {
+        setErrorMessage(error instanceof Error ? error.message : "Não foi possível entrar no momento.");
+      }
+    });
   }
 
   return (
@@ -49,6 +69,7 @@ export function LoginForm({ role, defaultEmail = "" }: LoginFormProps) {
           id="email"
           onChange={(event) => setEmail(event.target.value)}
           placeholder="usuario@exemplo.com"
+          required
           type="email"
           value={email}
         />
@@ -64,13 +85,22 @@ export function LoginForm({ role, defaultEmail = "" }: LoginFormProps) {
           id="password"
           onChange={(event) => setPassword(event.target.value)}
           placeholder="Digite sua senha"
+          required
           type="password"
           value={password}
         />
       </div>
 
-      <Button className="mt-4 h-14 rounded-[1rem] text-[1.1rem] font-semibold shadow-none sm:mt-7 sm:h-[5.8rem] sm:rounded-[1.8rem] sm:text-[1.95rem]" type="submit" variant={toneClasses.button}>
-        Entrar
+      {errorMessage ? (
+        <p className="rounded-[1rem] border border-[#ffd7da] bg-[#fff5f6] px-4 py-3 text-sm font-medium text-danger">{errorMessage}</p>
+      ) : null}
+
+      <div className={cn("rounded-[1rem] px-4 py-3 text-sm", role === "gestor" ? "bg-[#edf9f1] text-gestor" : "bg-[#edf3ff] text-tecnico")}>
+        Acesso demo: {authDemoCredentials[role].email} / {authDemoCredentials[role].password}
+      </div>
+
+      <Button className="mt-4 h-14 rounded-[1rem] text-[1.1rem] font-semibold shadow-none sm:mt-7 sm:h-[5.8rem] sm:rounded-[1.8rem] sm:text-[1.95rem]" disabled={isPending} type="submit" variant={toneClasses.button}>
+        {isPending ? "Entrando..." : "Entrar"}
       </Button>
 
       <p className="pt-4 text-center text-[1.05rem] text-[#687487] sm:text-[1.1rem]">

@@ -139,19 +139,18 @@ You are the specialist agent for the Action Planner frontend. Your job is to des
 - The initial route structure uses the App Router with role-oriented entry points in src/app, centered on /gestor and /tecnico.
 - The root route / currently acts as the role selection entry point that branches into /gestor and /tecnico.
 - The first implemented route set already covers gestor dashboard, new action, action detail, tecnico dashboard, and tecnico check-in and check-out flows.
-- The current mocked server strategy can start inside the Next.js app through local Route Handlers in src/app/api when backend dependencies are still unavailable.
-- The first authentication slice is exposed through a local mocked endpoint at /api/auth/login.
-- The local mocked auth server now also supports registration and logout through /api/auth/register and /api/auth/logout.
+- The current authentication slice is frontend-only and persists mocked users and session state in localStorage.
 - The route set now also covers role-based login flows at /gestor/login and /tecnico/login.
 - The route set now also covers role-based registration flows at /gestor/cadastro and /tecnico/cadastro.
 - The base architecture splits reusable primitives into src/shared and action-specific code into src/modules/actions with domain, application, infrastructure, and presentation layers.
 - Authentication follows the same modular split in src/modules/auth with domain, application, infrastructure, and presentation layers.
-- Mocked auth state is currently persisted with cookies and enforced at the route level through middleware for /gestor and /tecnico areas.
+- Mocked auth access control is currently enforced client-side because Next.js middleware cannot read localStorage.
 - Design tokens are centralized in src/app/globals.css and exposed to the UI layer through Tailwind theme extensions.
 - Manrope is the current base font choice because it is the closest clean sans-serif match to the proportions seen in the reference screens.
 - The current reference palette is anchored on solid role headers, with tecnico and public access flows using blue and gestor operational flows using green.
 - Reference surfaces use near-white backgrounds, cold light-gray borders, large rounded cards, 64px form controls, pale blue informational states, pale yellow pending states, and strong red execution danger actions.
 - Local execution in VS Code is standardized through .vscode/tasks.json and .vscode/launch.json using npm run dev and browser launch integration.
+- The /gestor route is temporarily replaced by a minimal under-construction screen with a direct return-to-login action until the gestor dashboard flow is resumed.
 
 ## Output Expectations
 

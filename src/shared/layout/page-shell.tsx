@@ -53,13 +53,13 @@ export function PageShell({
           ) : null}
 
           <div className="flex-1">
-            <h1 className="text-[1.5rem] font-semibold leading-tight text-white sm:text-screen-title">{title}</h1>
-            {subtitle ? <p className="mt-1 max-w-3xl text-sm text-white/88 sm:mt-2 sm:text-[2rem]">{subtitle}</p> : null}
+            <h1 className="text-[2rem] font-semibold leading-tight tracking-[-0.04em] text-white sm:text-screen-title">{title}</h1>
+            {subtitle ? <p className="mt-1 max-w-3xl text-[1rem] text-white/88 sm:mt-2 sm:text-[2rem]">{subtitle}</p> : null}
 
             {statusLabel || dateLabel ? (
               <div className="mt-2 flex flex-wrap items-center gap-2 sm:mt-5 sm:gap-3">
                 {statusLabel ? <Badge variant="info">{statusLabel}</Badge> : null}
-                {dateLabel ? <span className="text-[0.8rem] text-white/95 sm:text-[1.9rem]">{dateLabel}</span> : null}
+                {dateLabel ? <span className="text-[0.95rem] text-white/95 sm:text-[1.9rem]">{dateLabel}</span> : null}
               </div>
             ) : null}
           </div>

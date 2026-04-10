@@ -2,24 +2,21 @@
 
 import { useTransition } from "react";
 import { LogOut } from "lucide-react";
-import { useRouter } from "next/navigation";
+
+import { useAuth } from "@/modules/auth/presentation/auth-provider";
 
 interface LogoutButtonProps {
   label?: string;
 }
 
 export function LogoutButton({ label = "Sair" }: LogoutButtonProps) {
-  const router = useRouter();
+  const { logout } = useAuth();
   const [isPending, startTransition] = useTransition();
 
   function handleLogout() {
-    startTransition(async () => {
-      await fetch("/api/auth/logout", {
-        method: "POST",
-      });
-
-      router.push("/");
-      router.refresh();
+    startTransition(() => {
+      logout();
+      window.location.replace("/");
     });
   }
 
