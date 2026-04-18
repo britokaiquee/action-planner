@@ -25,7 +25,7 @@ export class MockAuthRepository implements AuthRepository {
     await new Promise((resolve) => setTimeout(resolve, 450));
 
     if (findStoredAuthUserByEmail(input.email)) {
-      throw new Error("Já existe um cadastro com este e-mail no servidor local mockado.");
+      throw new Error("Já existe um cadastro com este e-mail.");
     }
 
     const user = createStoredAuthUser(input);

@@ -60,6 +60,10 @@ export function formatLongDateTitleCase(date: string | Date) {
     .join("");
 }
 
+export function formatLongDateCapitalized(date: string | Date) {
+  return capitalize(formatLongDate(date));
+}
+
 export function formatShortDate(date: string) {
   return new Intl.DateTimeFormat("pt-BR", {
     day: "2-digit",

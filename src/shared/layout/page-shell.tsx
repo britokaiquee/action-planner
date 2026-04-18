@@ -13,10 +13,12 @@ interface PageShellProps {
   subtitle?: string;
   tone?: Tone;
   dateLabel?: string;
+  metaLabel?: string;
   statusLabel?: string;
   backHref?: string;
   showEditAction?: boolean;
   headerAction?: ReactNode;
+  headerClassName?: string;
   children: ReactNode;
 }
 
@@ -25,23 +27,27 @@ export function PageShell({
   subtitle,
   tone = "gestor",
   dateLabel,
+  metaLabel,
   statusLabel,
   backHref,
   showEditAction = false,
   headerAction,
+  headerClassName,
   children,
 }: PageShellProps) {
   const isGestor = tone === "gestor";
+  const hasHeaderControl = Boolean(headerAction || showEditAction);
 
   return (
     <div className="min-h-screen bg-background text-foreground">
       <header
         className={cn(
-          "px-6 pb-8 pt-10 text-white shadow-hero",
+          "px-4 pb-4 pt-7 text-white shadow-hero sm:px-6 sm:pb-8 sm:pt-10",
           isGestor ? "bg-gestor" : "bg-tecnico",
+          headerClassName,
         )}
       >
-        <div className="mx-auto flex max-w-5xl items-start gap-4">
+        <div className="mx-auto flex max-w-5xl items-start gap-3 sm:gap-4">
           {backHref ? (
             <Link
               aria-label="Voltar"
@@ -53,13 +59,22 @@ export function PageShell({
           ) : null}
 
           <div className="flex-1">
-            <h1 className="text-[2rem] font-semibold leading-tight tracking-[-0.04em] text-white sm:text-screen-title">{title}</h1>
-            {subtitle ? <p className="mt-1 max-w-3xl text-[1rem] text-white/88 sm:mt-2 sm:text-[2rem]">{subtitle}</p> : null}
+            <h1 className="text-[1.7rem] font-semibold leading-[1.08] tracking-[-0.04em] text-white sm:text-screen-title">{title}</h1>
+            {subtitle ? <p className="mt-1 max-w-3xl text-[0.95rem] leading-snug text-white/82 sm:mt-2 sm:text-[2rem]">{subtitle}</p> : null}
 
-            {statusLabel || dateLabel ? (
-              <div className="mt-2 flex flex-wrap items-center gap-2 sm:mt-5 sm:gap-3">
-                {statusLabel ? <Badge variant="info">{statusLabel}</Badge> : null}
-                {dateLabel ? <span className="text-[0.95rem] text-white/95 sm:text-[1.9rem]">{dateLabel}</span> : null}
+            {statusLabel || dateLabel || metaLabel ? (
+              <div
+                className={cn(
+                  "mt-2.5 grid grid-cols-[minmax(0,1fr)_auto] items-end gap-x-4 gap-y-1.5 sm:mt-5 sm:gap-3",
+                  hasHeaderControl ? "mr-[-3.25rem] w-[calc(100%+3.25rem)] sm:mr-[-4.5rem] sm:w-[calc(100%+4.5rem)]" : undefined,
+                )}
+              >
+                <div className="flex min-w-0 flex-wrap items-center gap-2 sm:gap-3">
+                  {statusLabel ? <Badge variant="info">{statusLabel}</Badge> : null}
+                  {dateLabel ? <span className="text-[0.9rem] leading-tight text-white/88 sm:text-[1.9rem]">{dateLabel}</span> : null}
+                </div>
+
+                {metaLabel ? <span className="row-start-1 self-end whitespace-nowrap text-[1rem] font-semibold leading-none text-white sm:text-[1.9rem]">{metaLabel}</span> : null}
               </div>
             ) : null}
           </div>

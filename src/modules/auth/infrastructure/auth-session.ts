@@ -11,6 +11,7 @@ export function toPublicAuthUser(user: {
   name: string;
   email: string;
   role: "gestor" | "tecnico";
+  profileTag?: string;
   cpf?: string;
   phone?: string;
   department?: string;
@@ -21,6 +22,7 @@ export function toPublicAuthUser(user: {
     name: user.name,
     email: user.email,
     role: user.role,
+    profileTag: user.profileTag,
     cpf: user.cpf,
     phone: user.phone,
     department: user.department,

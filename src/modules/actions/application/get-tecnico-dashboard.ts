@@ -1,5 +1,5 @@
 import type { ActionRepository } from "@/modules/actions/domain/action-repository";
-import { formatDateKey, formatLongDateTitleCase, formatShortDate } from "@/shared/lib/utils";
+import { formatDateKey, formatLongDateCapitalized, formatShortDate } from "@/shared/lib/utils";
 
 export type TecnicoDashboardBadgeTone = "warning" | "neutral" | "info" | "success" | "danger";
 
@@ -47,7 +47,7 @@ export async function getTecnicoDashboard(
   if (!technician) {
     return {
       technicianName,
-      dateLabel: formatLongDateTitleCase(currentDate),
+      dateLabel: formatLongDateCapitalized(currentDate),
       todayAssignments: [],
       upcomingAssignments: [],
     };
@@ -76,7 +76,7 @@ export async function getTecnicoDashboard(
             date: allocation.date,
             badgeLabel: isToday ? (hasCheckInRecord ? "Confirmado" : "Pendente") : formatShortDate(allocation.date),
             badgeTone: isToday ? (hasCheckInRecord ? "success" : "warning") : "neutral",
-            primaryActionLabel: isToday && !hasCheckInRecord ? "Fazer Check-in" : undefined,
+            primaryActionLabel: isToday ? "Ir para a ação" : undefined,
           } satisfies TecnicoDashboardAssignmentViewModel;
         }),
     )
@@ -84,7 +84,7 @@ export async function getTecnicoDashboard(
 
   return {
     technicianName: technician.name,
-    dateLabel: formatLongDateTitleCase(currentDate),
+    dateLabel: formatLongDateCapitalized(currentDate),
     todayAssignments: assignments.filter((assignment) => assignment.date === todayKey),
     upcomingAssignments: assignments.filter((assignment) => assignment.date > todayKey),
   };

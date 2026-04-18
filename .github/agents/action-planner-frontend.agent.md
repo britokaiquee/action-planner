@@ -38,6 +38,7 @@ You are the specialist agent for the Action Planner frontend. Your job is to des
 - Preserve the existing visual character from the references: bold top sections, rounded cards, strong green primary actions, blue informational accents, spacious vertical rhythm, and high readability.
 - Derive the app theme from the reference images instead of inventing a separate visual system.
 - Derive typography from the references as well: hero headings, section headings, card titles, metadata text, button labels, and form labels should follow the visual proportions, weights, and spacing suggested by the screenshots.
+- Keep header proportions standardized across mobile and web whenever a screen follows the compact header pattern from login or registration references: same height scale, padding rhythm, icon sizing, title sizing, and shared content width alignment.
 - Derive color tokens from the references and keep them centralized: technician and public access blue, gestor and confirmation green, pale blue informational surfaces, pale yellow planning and pending surfaces, red for critical execution actions such as check-out, neutral grays for borders and metadata, and white or near-white card surfaces.
 - Derive supporting tokens from the references too: border radius, shadows, input heights, header heights, card spacing, status pill styling, and icon sizing.
 - If an exact font family cannot be confirmed from repository assets, choose the closest clean sans-serif that visually matches the references and document that decision here when it is confirmed.
@@ -151,6 +152,14 @@ You are the specialist agent for the Action Planner frontend. Your job is to des
 - Reference surfaces use near-white backgrounds, cold light-gray borders, large rounded cards, 64px form controls, pale blue informational states, pale yellow pending states, and strong red execution danger actions.
 - Local execution in VS Code is standardized through .vscode/tasks.json and .vscode/launch.json using npm run dev and browser launch integration.
 - The /gestor route is temporarily replaced by a minimal under-construction screen with a direct return-to-login action until the gestor dashboard flow is resumed.
+- The latest login references keep a role selector inside each role-specific login page, with the page header color and primary CTA following the selected role.
+- The latest registration references simplify the gestor form to name, email, and password, while the tecnico form adds a separate role function field.
+- The latest tecnico dashboard reference includes a right-aligned action code in the header metadata row, a blue check-in/check-out CTA, an empty upcoming-state card, and a bottom team CTA.
+- The route set now also covers the tecnico team flow at /tecnico/equipe, opened from the dashboard CTA, with a searchable mobile list and a destructive leave-team action.
+- Compact headers on secondary screens must keep the same mobile and web proportions used by the role-specific registration screens, including aligned max width between header content and page body.
+- User header tags are generated client-side as unique uppercase alphanumeric codes prefixed with # and persisted per user in local storage.
+- The demo tecnico profile uses the fixed header tag #1AE3DP to match the dashboard reference image exactly.
+- Local auth storage now applies a one-time cleanup migration that restores only the seeded demo profiles when previously created mock accounts need to be discarded.
 
 ## Output Expectations
 

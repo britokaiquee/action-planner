@@ -5,6 +5,7 @@ export interface AuthPublicUser {
   name: string;
   email: string;
   role: AuthRole;
+  profileTag?: string;
   cpf?: string;
   phone?: string;
   department?: string;
@@ -17,6 +18,7 @@ export interface AuthUser {
   email: string;
   role: AuthRole;
   password: string;
+  profileTag?: string;
   cpf?: string;
   phone?: string;
   department?: string;

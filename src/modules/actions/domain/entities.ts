@@ -1,9 +1,19 @@
 export type UserRole = "gestor" | "tecnico";
+export type TeamMemberRole = "gestor" | "tecnico";
 export type PlannedStatus = "planejamento" | "andamento" | "concluida" | "atrasada";
 export type DailyAllocationStatus = "confirmado" | "pendente" | "conflito";
 export type ExecutionType = "check-in" | "check-out";
 export type ParticipantResourceType = "diaria" | "alimentacao" | "epi" | "ferramenta";
 export type CommonResourceType = "veiculo" | "logistica" | "material";
+
+export interface TeamMember {
+  id: string;
+  name: string;
+  jobTitle: string;
+  profileTag: string;
+  role: TeamMemberRole;
+  isHighlighted?: boolean;
+}
 
 export interface ParticipantResource {
   id: string;

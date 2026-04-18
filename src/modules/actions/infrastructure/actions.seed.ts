@@ -1,4 +1,4 @@
-import type { ActionEntity, FormDefaults, Technician } from "@/modules/actions/domain/entities";
+import type { ActionEntity, FormDefaults, TeamMember, Technician } from "@/modules/actions/domain/entities";
 
 export const coordinatorName = "Maria Costa";
 export const technicianName = "João Silva";
@@ -68,36 +68,89 @@ export const techniciansSeed: Technician[] = [
   },
 ];
 
+export const teamMembersSeed: TeamMember[] = [
+  {
+    id: "team-gestor-1",
+    name: "Maria Costa",
+    jobTitle: "Gestor(a)",
+    profileTag: "#M8K4X2",
+    role: "gestor",
+    isHighlighted: true,
+  },
+  {
+    id: "team-tecnico-1",
+    name: "João Silva",
+    jobTitle: "Técnico de TI",
+    profileTag: "#1AE3DP",
+    role: "tecnico",
+  },
+  {
+    id: "team-tecnico-2",
+    name: "Ana Santos",
+    jobTitle: "Infraestrutura de rede",
+    profileTag: "#7P9WN5",
+    role: "tecnico",
+  },
+  {
+    id: "team-tecnico-3",
+    name: "João Oliveira",
+    jobTitle: "Manutenção de equipamentos",
+    profileTag: "#3QR8YT",
+    role: "tecnico",
+  },
+  {
+    id: "team-tecnico-4",
+    name: "Juliana Lima",
+    jobTitle: "Suporte técnico",
+    profileTag: "#5ZN7KJ",
+    role: "tecnico",
+  },
+  {
+    id: "team-tecnico-5",
+    name: "Maria Santos",
+    jobTitle: "Eletricista",
+    profileTag: "#6LH2VB",
+    role: "tecnico",
+  },
+  {
+    id: "team-tecnico-6",
+    name: "Pedro Alves",
+    jobTitle: "Infraestrutura de rede",
+    profileTag: "#4GF9XC",
+    role: "tecnico",
+  },
+];
+
 export const actionsSeed: ActionEntity[] = [
   {
     id: "acao-instalacao-paineis",
-    title: "Instalação de Painéis",
+    title: "Instalação de painéis",
     description: "Deslocamento da equipe de infraestrutura para instalar painéis de chamadas dentro dos postos de saúde de Itabuna.",
     city: "Itabuna - BA",
-    local: "Posto de Saúde Central",
-    startDate: "2026-04-06",
-    endDate: "2026-04-06",
+    local: "postos de saúde",
+    startDate: "2026-04-10",
+    endDate: "2026-04-10",
     plannedStatus: "andamento",
     notes: "Priorizar check-in até 08:15 e validar checklist de segurança antes de iniciar a montagem.",
     technicians: techniciansSeed.slice(0, 2),
     dailyAllocations: [
       {
         technicianId: "tec-1",
-        date: "2026-04-06",
+        date: "2026-04-10",
         checkInTime: "08:00",
         checkOutTime: "17:00",
         status: "confirmado",
       },
       {
         technicianId: "tec-2",
-        date: "2026-04-06",
+        date: "2026-04-10",
         checkInTime: "08:00",
         checkOutTime: "17:00",
         status: "confirmado",
       },
       {
         technicianId: "tec-2",
-        date: "2026-04-07",
+        date: "2026-04-11",
         checkInTime: "08:00",
         checkOutTime: "17:00",
         status: "conflito",
@@ -137,19 +190,19 @@ export const actionsSeed: ActionEntity[] = [
   },
   {
     id: "acao-instalacao-paineis-bairro-alto",
-    title: "Instalação de Painéis",
+    title: "Instalação de painéis",
     description: "Continuação da instalação dos painéis de chamadas na unidade do Bairro Alto, conforme o fluxo mostrado nas referências.",
     city: "Itabuna - BA",
     local: "Posto de Saúde Bairro Alto",
-    startDate: "2026-04-07",
-    endDate: "2026-04-07",
+    startDate: "2026-04-09",
+    endDate: "2026-04-09",
     plannedStatus: "planejamento",
     notes: "Equipe deslocada para a segunda frente de instalação no dia seguinte.",
-    technicians: [techniciansSeed[0]],
+    technicians: [techniciansSeed[1]],
     dailyAllocations: [
       {
-        technicianId: "tec-1",
-        date: "2026-04-07",
+        technicianId: "tec-2",
+        date: "2026-04-09",
         checkInTime: "08:00",
         checkOutTime: "17:00",
         status: "pendente",
