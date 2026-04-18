@@ -84,9 +84,10 @@ export async function getTecnicoTeam(
   }
 
   const viewMembers = members.map((member) => {
-    const isCurrentUser =
+    const isCurrentUser = Boolean(
       (normalizedUserTag && normalizeValue(member.profileTag) === normalizedUserTag) ||
-      (normalizedUserName && normalizeValue(member.name) === normalizedUserName);
+        (normalizedUserName && normalizeValue(member.name) === normalizedUserName),
+    );
 
     return {
       id: member.id,

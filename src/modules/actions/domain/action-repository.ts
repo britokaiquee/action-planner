@@ -1,4 +1,20 @@
-import type { ActionEntity, FormDefaults, TeamMember, Technician } from "@/modules/actions/domain/entities";
+import type {
+  ActionEntity,
+  ExecutionRecord,
+  ExecutionType,
+  FormDefaults,
+  TeamMember,
+  Technician,
+} from "@/modules/actions/domain/entities";
+
+export interface CreateExecutionRecordInput {
+  actionId: string;
+  actionDate: string;
+  type: ExecutionType;
+  technicianName: string;
+  notes?: string;
+  timestamp?: string;
+}
 
 export interface ActionRepository {
   listActions(): Promise<ActionEntity[]>;
@@ -6,4 +22,5 @@ export interface ActionRepository {
   listTechnicians(): Promise<Technician[]>;
   listTeamMembers(): Promise<TeamMember[]>;
   getFormDefaults(): Promise<FormDefaults>;
+  createExecutionRecord(input: CreateExecutionRecordInput): Promise<ExecutionRecord | null>;
 }

@@ -155,7 +155,11 @@ You are the specialist agent for the Action Planner frontend. Your job is to des
 - The latest login references keep a role selector inside each role-specific login page, with the page header color and primary CTA following the selected role.
 - The latest registration references simplify the gestor form to name, email, and password, while the tecnico form adds a separate role function field.
 - The latest tecnico dashboard reference includes a right-aligned action code in the header metadata row, a blue check-in/check-out CTA, an empty upcoming-state card, and a bottom team CTA.
+- The route set now also covers the tecnico check-in entry flow at /tecnico/check-in/[actionId], receiving the allocation date by query string and persisting mock execution records in the in-memory repository.
+- The route set now also covers the tecnico action participants flow at /tecnico/check-in/[actionId]/participantes, showing the action creator and only the technicians allocated to that action.
 - The route set now also covers the tecnico team flow at /tecnico/equipe, opened from the dashboard CTA, with a searchable mobile list and a destructive leave-team action.
+- Tecnico action cards on the dashboard must stay directly interactive without nested execution buttons, and the secondary execution screens must reuse the same compact header proportions already established by the registration screens.
+- The tecnico check-in screen should keep the content area as a three-block vertical stack below the compact header, with two cards around 90-92% width, 16-20px internal padding, 16-24px gaps, dense resource rows, and a pill CTA matching the cards' width.
 - Compact headers on secondary screens must keep the same mobile and web proportions used by the role-specific registration screens, including aligned max width between header content and page body.
 - User header tags are generated client-side as unique uppercase alphanumeric codes prefixed with # and persisted per user in local storage.
 - The demo tecnico profile uses the fixed header tag #1AE3DP to match the dashboard reference image exactly.

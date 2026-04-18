@@ -76,7 +76,7 @@ export async function getTecnicoDashboard(
             date: allocation.date,
             badgeLabel: isToday ? (hasCheckInRecord ? "Confirmado" : "Pendente") : formatShortDate(allocation.date),
             badgeTone: isToday ? (hasCheckInRecord ? "success" : "warning") : "neutral",
-            primaryActionLabel: isToday ? "Ir para a ação" : undefined,
+            primaryActionLabel: isToday ? "Check-in / check-out" : undefined,
           } satisfies TecnicoDashboardAssignmentViewModel;
         }),
     )

@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Clock3, MapPin } from "lucide-react";
 
 import type { TecnicoDashboardAssignmentViewModel } from "@/modules/actions/application/get-tecnico-dashboard";
@@ -17,8 +18,8 @@ interface TecnicoScheduleCardProps {
 }
 
 export function TecnicoScheduleCard({ assignment }: TecnicoScheduleCardProps) {
-  return (
-    <Card className="cursor-pointer transition-shadow hover:shadow-md">
+  const cardContent = (
+    <Card className="transition-shadow hover:shadow-md">
       <CardContent className="flex flex-col gap-4 p-5 sm:gap-6 sm:p-7">
         <div className="flex items-start justify-between gap-4">
           <h3 className="flex-1 pr-2 text-[1.25rem] font-semibold leading-[1.08] tracking-[-0.04em] text-text-strong sm:text-card-title">
@@ -43,5 +44,15 @@ export function TecnicoScheduleCard({ assignment }: TecnicoScheduleCardProps) {
         </div>
       </CardContent>
     </Card>
+  );
+
+  if (!assignment.primaryActionLabel) {
+    return cardContent;
+  }
+
+  return (
+    <Link className="block rounded-panel focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-tecnico focus-visible:ring-offset-2" href={`/tecnico/check-in/${assignment.actionId}?date=${assignment.date}`}>
+      {cardContent}
+    </Link>
   );
 }

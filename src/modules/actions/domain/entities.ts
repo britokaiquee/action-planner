@@ -52,6 +52,12 @@ export interface CommonResource {
   hasConflict?: boolean;
 }
 
+export interface ExecutionResourceItem {
+  id: string;
+  label: string;
+  quantityLabel: string;
+}
+
 export interface ExecutionRecord {
   id: string;
   actionId: string;
@@ -71,6 +77,7 @@ export interface ActionMetrics {
 
 export interface ActionEntity {
   id: string;
+  createdByTeamMemberId?: string;
   title: string;
   description: string;
   city: string;
@@ -82,6 +89,7 @@ export interface ActionEntity {
   technicians: Technician[];
   dailyAllocations: DailyAllocation[];
   commonResources: CommonResource[];
+  executionResources?: ExecutionResourceItem[];
   executionRecords: ExecutionRecord[];
   metrics: ActionMetrics;
 }

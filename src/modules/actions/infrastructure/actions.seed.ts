@@ -124,12 +124,13 @@ export const teamMembersSeed: TeamMember[] = [
 export const actionsSeed: ActionEntity[] = [
   {
     id: "acao-instalacao-paineis",
+    createdByTeamMemberId: "team-gestor-1",
     title: "Instalação de painéis",
     description: "Deslocamento da equipe de infraestrutura para instalar painéis de chamadas dentro dos postos de saúde de Itabuna.",
     city: "Itabuna - BA",
     local: "postos de saúde",
     startDate: "2026-04-10",
-    endDate: "2026-04-10",
+    endDate: "2026-04-14",
     plannedStatus: "andamento",
     notes: "Priorizar check-in até 08:15 e validar checklist de segurança antes de iniciar a montagem.",
     technicians: techniciansSeed.slice(0, 2),
@@ -180,6 +181,28 @@ export const actionsSeed: ActionEntity[] = [
         type: "material",
       },
     ],
+    executionResources: [
+      {
+        id: "exec-r-1",
+        label: "Painéis de chamada",
+        quantityLabel: "x4",
+      },
+      {
+        id: "exec-r-2",
+        label: "Suporte de fixação",
+        quantityLabel: "x4",
+      },
+      {
+        id: "exec-r-3",
+        label: "Cabo HDMI - 10 metros",
+        quantityLabel: "x4",
+      },
+      {
+        id: "exec-r-4",
+        label: "Equipamento de segurança",
+        quantityLabel: "x2",
+      },
+    ],
     executionRecords: [],
     metrics: {
       progressPercent: 45,
@@ -190,6 +213,7 @@ export const actionsSeed: ActionEntity[] = [
   },
   {
     id: "acao-instalacao-paineis-bairro-alto",
+    createdByTeamMemberId: "team-gestor-1",
     title: "Instalação de painéis",
     description: "Continuação da instalação dos painéis de chamadas na unidade do Bairro Alto, conforme o fluxo mostrado nas referências.",
     city: "Itabuna - BA",
@@ -234,6 +258,7 @@ export const actionsSeed: ActionEntity[] = [
   },
   {
     id: "acao-manutencao-equipamentos",
+    createdByTeamMemberId: "team-gestor-1",
     title: "Manutenção Equipamentos",
     description: "Visita técnica ao hospital municipal para manutenção preventiva e troca de componentes críticos.",
     city: "Ilhéus - BA",
