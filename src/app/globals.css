@@ -90,3 +90,51 @@ textarea {
     color: var(--color-foreground-soft);
   }
 }
+
+@keyframes dialog-overlay-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes dialog-sheet-in-mobile {
+  from {
+    opacity: 0;
+    transform: translateY(44px) scale(0.985);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes dialog-sheet-in-desktop {
+  from {
+    opacity: 0;
+    transform: translateY(0) scale(0.92);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@layer utilities {
+  .animate-dialog-overlay {
+    animation: dialog-overlay-in 320ms ease-out;
+  }
+
+  .animate-dialog-sheet-mobile {
+    animation: dialog-sheet-in-mobile 420ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .animate-dialog-sheet-desktop {
+    animation: dialog-sheet-in-desktop 360ms cubic-bezier(0.2, 0.9, 0.2, 1);
+  }
+}

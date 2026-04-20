@@ -64,8 +64,15 @@ export async function getTecnicoDashboard(
               record.type === "check-in" &&
               normalizeName(record.technicianName) === normalizeName(technicianName),
           );
+          const hasCheckOutRecord = action.executionRecords.some(
+            (record) =>
+              record.actionDate === allocation.date &&
+              record.type === "check-out" &&
+              normalizeName(record.technicianName) === normalizeName(technicianName),
+          );
 
           const isToday = allocation.date === todayKey;
+          const isInProgress = hasCheckInRecord && !hasCheckOutRecord;
 
           return {
             id: `${action.id}:${allocation.date}:${allocation.technicianId}`,
@@ -74,8 +81,8 @@ export async function getTecnicoDashboard(
             locationLabel: `${action.city}, ${action.local}`,
             timeLabel: `${allocation.checkInTime} - ${allocation.checkOutTime}`,
             date: allocation.date,
-            badgeLabel: isToday ? (hasCheckInRecord ? "Confirmado" : "Pendente") : formatShortDate(allocation.date),
-            badgeTone: isToday ? (hasCheckInRecord ? "success" : "warning") : "neutral",
+            badgeLabel: isToday ? (isInProgress ? "Em andamento" : "Pendente") : formatShortDate(allocation.date),
+            badgeTone: isToday ? (isInProgress ? "info" : "warning") : "neutral",
             primaryActionLabel: isToday ? "Check-in / check-out" : undefined,
           } satisfies TecnicoDashboardAssignmentViewModel;
         }),

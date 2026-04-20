@@ -19,6 +19,7 @@ export interface TecnicoCheckInViewModel {
   helperText?: string;
   isLocationConfirmed: boolean;
   confirmationLabel?: string;
+  confirmationTimestamp?: string;
 }
 
 interface GetTecnicoCheckInOptions {
@@ -110,5 +111,6 @@ export async function getTecnicoCheckIn(
     helperText: allocation.notes ?? action.notes,
     isLocationConfirmed: Boolean(confirmationRecord),
     confirmationLabel: confirmationRecord ? `Localização confirmada em ${formatShortDateTime(confirmationRecord.timestamp)}` : undefined,
+    confirmationTimestamp: confirmationRecord?.timestamp,
   };
 }

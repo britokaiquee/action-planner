@@ -15,9 +15,10 @@ const badgeVariantMap = {
 
 interface TecnicoScheduleCardProps {
   assignment: TecnicoDashboardAssignmentViewModel;
+  href?: string;
 }
 
-export function TecnicoScheduleCard({ assignment }: TecnicoScheduleCardProps) {
+export function TecnicoScheduleCard({ assignment, href }: TecnicoScheduleCardProps) {
   const cardContent = (
     <Card className="transition-shadow hover:shadow-md">
       <CardContent className="flex flex-col gap-4 p-5 sm:gap-6 sm:p-7">
@@ -51,7 +52,7 @@ export function TecnicoScheduleCard({ assignment }: TecnicoScheduleCardProps) {
   }
 
   return (
-    <Link className="block rounded-panel focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-tecnico focus-visible:ring-offset-2" href={`/tecnico/check-in/${assignment.actionId}?date=${assignment.date}`}>
+    <Link className="block rounded-panel focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-tecnico focus-visible:ring-offset-2" href={href ?? `/tecnico/check-in/${assignment.actionId}?date=${assignment.date}`}>
       {cardContent}
     </Link>
   );

@@ -8,6 +8,7 @@ import { CalendarDays, UsersRound } from "lucide-react";
 import { Button } from "@/shared/ui/button";
 
 import { getTecnicoDashboard, type TecnicoDashboardViewModel } from "@/modules/actions/application/get-tecnico-dashboard";
+import { listPendingDemoCheckouts, subscribeToPendingDemoCheckouts } from "@/modules/actions/infrastructure/demo-checkout-session";
 import { actionRepository } from "@/modules/actions/infrastructure/mock-action-repository";
 import { authDemoCredentials } from "@/modules/auth/infrastructure/auth.seed";
 import { useAuth } from "@/modules/auth/presentation/auth-provider";
@@ -28,6 +29,9 @@ export function TecnicoDashboardScreen() {
   const [systemDate] = useState(() => new Date());
   const [dashboard, setDashboard] = useState<TecnicoDashboardViewModel | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [pendingDemoCheckouts, setPendingDemoCheckouts] = useState(() =>
+    user?.email ? listPendingDemoCheckouts(user.email) : [],
+  );
 
   const jobTitle = user?.jobTitle?.replace("Tecnico", "Técnico") ?? "Técnico de campo";
   const hasTodayAssignments = Boolean(dashboard?.todayAssignments.length);
@@ -66,6 +70,42 @@ export function TecnicoDashboardScreen() {
     };
   }, [currentDate, user?.name]);
 
+  useEffect(() => {
+    if (!user?.email) {
+      setPendingDemoCheckouts([]);
+      return;
+    }
+
+    setPendingDemoCheckouts(listPendingDemoCheckouts(user.email));
+
+    return subscribeToPendingDemoCheckouts(() => {
+      setPendingDemoCheckouts(listPendingDemoCheckouts(user.email));
+    });
+  }, [user?.email]);
+
+  function getAssignmentHref(actionId: string, date: string) {
+    const pendingCheckout = pendingDemoCheckouts.find((item) => item.actionId === actionId && item.actionDate === date);
+
+    if (pendingCheckout) {
+      return `/tecnico/check-out/${actionId}?date=${date}&checkInAt=${encodeURIComponent(pendingCheckout.checkInAt)}`;
+    }
+
+    return `/tecnico/check-in/${actionId}?date=${date}`;
+  }
+
+  function getAssignmentStatusOverride(actionId: string, date: string) {
+    const pendingCheckout = pendingDemoCheckouts.find((item) => item.actionId === actionId && item.actionDate === date);
+
+    if (!pendingCheckout) {
+      return null;
+    }
+
+    return {
+      badgeLabel: "Em andamento",
+      badgeTone: "info" as const,
+    };
+  }
+
   return (
     <ProtectedRoleRoute role="tecnico">
       <PageShell
@@ -90,7 +130,14 @@ export function TecnicoDashboardScreen() {
 
                 <div className="space-y-4 sm:space-y-6">
                   {dashboard?.todayAssignments.map((assignment) => (
-                    <TecnicoScheduleCard assignment={assignment} key={assignment.id} />
+                    <TecnicoScheduleCard
+                      assignment={{
+                        ...assignment,
+                        ...getAssignmentStatusOverride(assignment.actionId, assignment.date),
+                      }}
+                      href={getAssignmentHref(assignment.actionId, assignment.date)}
+                      key={assignment.id}
+                    />
                   ))}
                 </div>
               </section>
@@ -102,7 +149,14 @@ export function TecnicoDashboardScreen() {
               {dashboard?.upcomingAssignments.length ? (
                 <div className="space-y-4 sm:space-y-6">
                   {dashboard.upcomingAssignments.map((assignment) => (
-                    <TecnicoScheduleCard assignment={assignment} key={assignment.id} />
+                    <TecnicoScheduleCard
+                      assignment={{
+                        ...assignment,
+                        ...getAssignmentStatusOverride(assignment.actionId, assignment.date),
+                      }}
+                      href={getAssignmentHref(assignment.actionId, assignment.date)}
+                      key={assignment.id}
+                    />
                   ))}
                 </div>
               ) : (

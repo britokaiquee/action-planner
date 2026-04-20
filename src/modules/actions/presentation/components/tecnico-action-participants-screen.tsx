@@ -18,6 +18,8 @@ import { TecnicoTeamMemberCard } from "./tecnico-team-member-card";
 interface TecnicoActionParticipantsScreenProps {
   actionId: string;
   actionDate?: string;
+  origin?: "check-in" | "check-out";
+  transientCheckInTimestamp?: string;
 }
 
 function TecnicoActionParticipantsLoading() {
@@ -30,7 +32,12 @@ function TecnicoActionParticipantsLoading() {
   );
 }
 
-export function TecnicoActionParticipantsScreen({ actionId, actionDate }: TecnicoActionParticipantsScreenProps) {
+export function TecnicoActionParticipantsScreen({
+  actionId,
+  actionDate,
+  origin = "check-in",
+  transientCheckInTimestamp,
+}: TecnicoActionParticipantsScreenProps) {
   const { user } = useAuth();
   const [participants, setParticipants] = useState<TecnicoActionParticipantsViewModel | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -93,7 +100,14 @@ export function TecnicoActionParticipantsScreen({ actionId, actionDate }: Tecnic
     return searchable.includes(normalizedQuery);
   });
 
-  const backHref = actionDate ? `/tecnico/check-in/${actionId}?date=${actionDate}` : `/tecnico/check-in/${actionId}`;
+  const backHref =
+    origin === "check-out"
+      ? actionDate
+        ? `/tecnico/check-out/${actionId}?date=${actionDate}${transientCheckInTimestamp ? `&checkInAt=${encodeURIComponent(transientCheckInTimestamp)}` : ""}`
+        : `/tecnico/check-out/${actionId}${transientCheckInTimestamp ? `?checkInAt=${encodeURIComponent(transientCheckInTimestamp)}` : ""}`
+      : actionDate
+        ? `/tecnico/check-in/${actionId}?date=${actionDate}`
+        : `/tecnico/check-in/${actionId}`;
 
   return (
     <ProtectedRoleRoute role="tecnico">
@@ -101,7 +115,7 @@ export function TecnicoActionParticipantsScreen({ actionId, actionDate }: Tecnic
         <header className="bg-tecnico text-white shadow-hero">
           <div className="mx-auto flex min-h-[8.75rem] w-full max-w-[56.25rem] items-center gap-3 px-4 pb-[18px] pt-10 sm:min-h-[9.5rem] sm:px-6 sm:pb-[18px] sm:pt-11">
             <Link
-              aria-label="Voltar para o check-in"
+              aria-label={origin === "check-out" ? "Voltar para o check-out" : "Voltar para o check-in"}
               className="inline-flex h-8 w-8 flex-shrink-0 items-center justify-center text-white transition hover:text-white/90 sm:h-9 sm:w-9"
               href={backHref}
             >
